@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+    />
+    <link
+      rel="shortcut icon"
+      type="images/x-icon"
+      href="/assets/logos/favicon.ico"
+    />
+    <title>SAMPLE</title>
+    <script src="https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts-en.js"></script>
+    <style>
+      @font-face {
+        font-family: 'D-DIN';
+        src: url('D-DIN.ttf');
+      }
+      body {
+        background-color: #000616;
+      }
+      #sample {
+        width: 400px;
+        height: 400px;
+        margin: 0 auto;
+      }
+      .label {
+        text-align: center;
+        font-size: 70px;
+        line-height: 380px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 300px;
+        color: #bcb216;
+        font-family: 'D-DIN';
+      }
+      .label2 {
+        text-align: center;
+        font-size: 22px;
+        line-height: 520px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 300px;
+        color: #38aa92;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="sample"></div>
+    <img src="bg.png" id="bg_img" style="display:none" />
+    <img
+      src="https://pic1.zhimg.com/80/v2-d6f1b50de4e632d1590b78b754deb652_hd.png"
+      id="round1"
+      style="display:none"
+    />
+    <div class="label">80%</div>
+    <div class="label2">系统指数</div>
+
+    <script>
+      var value = 0.8, // 值，0~1之间
+        startAngle = 215, // 开始角度
+        endAngle = -35, // 结束角度
+        splitCount = 60, // 刻度数量
+        pointerAngle = (startAngle - endAngle) * (1 - value) + endAngle; // 当前指针（值）角度
+      var myChart = echarts.init(document.getElementById('sample'));
+      var option = {
+        series: [
+          {
+            type: 'gauge',
+            radius: '90%',
+            startAngle: pointerAngle,
+            endAngle: endAngle,
+            splitNumber: 1,
+            axisLine: {
+              show: false,
+              lineStyle: {
+                width: 3,
+                opacity: 0
+              }
+            },
+            title: { show: false },
+            detail: { show: false },
+            splitLine: { show: false },
+            axisTick: {
+              length: 27,
+              splitNumber: Math.ceil((1 - value) * splitCount),
+              lineStyle: {
+                color: '#001242',
+                width: 3
+              }
+            },
+            axisLabel: { show: false },
+            pointer: { show: false },
+            itemStyle: {},
+            markPoint: {
+              animation: false,
+              silent: false,
+              data: [
+                {
+                  symbol: 'image://' + document.getElementById('round1').src,
+                  x: '50%',
+                  y: '50%',
+                  symbolSize: 280,
+                  itemStyle: {
+                    borderWidth: 3
+                  }
+                },
+                {
+                  symbol: 'circle',
+                  symbolSize: 200
+                }
+              ]
+            },
+            data: [
+              {
+                value: value,
+                name: 'test gauge'
+              }
+            ]
+          },
+          {
+            type: 'gauge',
+            radius: '90%',
+            startAngle: startAngle,
+            endAngle: pointerAngle,
+            splitNumber: 1,
+            axisLine: {
+              show: false,
+              lineStyle: {
+                width: 3,
+                opacity: 0
+              }
+            },
+            title: { show: false },
+            detail: { show: false },
+            splitLine: { show: false },
+            axisTick: {
+              length: 27,
+              splitNumber: Math.ceil(value * splitCount),
+              lineStyle: {
+                color: {
+                  image: document.getElementById('bg_img'),
+                  repeat: 'no-repeat'
+                },
+                width: 3
+              }
+            },
+            axisLabel: { show: false },
+            pointer: { show: false },
+            itemStyle: {},
+            data: [
+              {
+                value: value,
+                name: 'test gauge'
+              }
+            ]
+          },
+          {
+            type: 'gauge',
+            radius: '95%',
+            startAngle: pointerAngle,
+            endAngle: pointerAngle,
+            splitNumber: 1,
+            axisLine: {
+              show: false,
+              lineStyle: {
+                width: 3,
+                opacity: 0
+              }
+            },
+            title: { show: false },
+            detail: { show: false },
+            splitLine: { show: false },
+            axisTick: {
+              length: 20,
+              splitNumber: 1,
+              lineStyle: {
+                color: {
+                  image: document.getElementById('bg_img'),
+                  repeat: 'no-repeat'
+                },
+                width: 3
+              }
+            },
+            axisLabel: { show: false },
+            pointer: { show: false },
+            itemStyle: {},
+            data: [
+              {
+                value: value,
+                name: 'test gauge'
+              }
+            ]
+          }
+        ]
+      };
+      myChart.setOption(option);
+    </script>
+  </body>
+</html>
